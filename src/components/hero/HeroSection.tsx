@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { HeroVideoPlayer } from './HeroVideoPlayer';
-import { CulinaryExplodeScene } from './CulinaryExplodeScene';
-import { ArrowDown, UtensilsCrossed, Calendar, Film, Box } from 'lucide-react';
+import React from 'react';
+import { ArrowDown, UtensilsCrossed, Calendar } from 'lucide-react';
 
 interface HeroSectionProps {
   onExploreMenu: () => void;
@@ -9,33 +7,8 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreMenu, onBookTable }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
-  // Default to cinematic video as requested by user
-  const [heroMode, setHeroMode] = useState<'video' | '3d'>('video');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const totalScrollableDistance = containerRef.current.offsetHeight - window.innerHeight;
-      
-      if (totalScrollableDistance <= 0) return;
-      
-      const currentScroll = -rect.top;
-      const progress = Math.min(Math.max(currentScroll / totalScrollableDistance, 0), 1);
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <section
-      ref={containerRef}
       id="hero"
       className="relative w-full bg-[#0A0A0C] pt-28 pb-20 px-4 sm:px-6 border-b border-[#D6A75D]/15 overflow-hidden"
     >
@@ -57,47 +30,40 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreMenu, onBookT
           </div>
         </div>
 
-        {/* View Mode Toggle: Cinematic Video vs 3D Exploded Assemblage */}
-        <div className="flex items-center gap-2 mb-6 p-1 bg-[#14141C] border border-[#D6A75D]/25 rounded-lg shadow-xl">
-          <button
-            onClick={() => setHeroMode('video')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md text-xs font-semibold tracking-wide transition-all cursor-pointer ${
-              heroMode === 'video'
-                ? 'bg-[#D6A75D] text-[#0A0A0C] shadow-md'
-                : 'text-[#C6C2B6] hover:text-[#FAF8F5]'
-            }`}
-          >
-            <Film className="w-3.5 h-3.5" />
-            <span>Cinematic Video</span>
-          </button>
-          <button
-            onClick={() => setHeroMode('3d')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md text-xs font-semibold tracking-wide transition-all cursor-pointer ${
-              heroMode === '3d'
-                ? 'bg-[#D6A75D] text-[#0A0A0C] shadow-md'
-                : 'text-[#C6C2B6] hover:text-[#FAF8F5]'
-            }`}
-          >
-            <Box className="w-3.5 h-3.5" />
-            <span>3D Explode & Reassemble</span>
-          </button>
-        </div>
-
-        {/* Hero Visual Container: Keeping Entire Video / 3D Scene Visible Without Unwanted Cropping */}
+        {/* Static Hero Image Container - Permanently visible before, during, and after hover */}
         <div className="w-full max-w-6xl mx-auto mb-12">
-          {heroMode === 'video' ? (
-            <HeroVideoPlayer
-              videoSrc="/videos/foodland_dosa_cinematic.mp4"
-              posterSrc="/images/dosa_hero_poster.jpg"
+          <div className="relative w-full aspect-video min-h-[360px] sm:min-h-[460px] lg:min-h-[560px] max-w-6xl mx-auto rounded-xl overflow-hidden bg-[#070709] border border-[#D6A75D]/25 shadow-[0_12px_48px_rgba(0,0,0,0.85)] select-none">
+            <img
+              src={`${import.meta.env.BASE_URL}images/dosa_hero_poster.jpg`}
+              alt="Food Land Signature South Indian Set Dosa Craftsmanship"
+              loading="eager"
+              style={{
+                opacity: 1,
+                visibility: 'visible',
+                display: 'block',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
+              }}
+              className="w-full h-full object-cover"
             />
-          ) : (
-            <div className="w-full h-[600px] lg:h-[680px] rounded-xl bg-[#070709] border border-[#D6A75D]/25 overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.8)] relative">
-              <CulinaryExplodeScene externalScrollProgress={scrollProgress} />
+
+            {/* Cinematic subtle edge vignette and warm gold lighting ambiance */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#0A0A0C] via-transparent to-[#0A0A0C]/25" />
+            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_80px_rgba(10,10,12,0.7)]" />
+
+            {/* Clean status badge emphasizing pure vegetarian culinary craftsmanship */}
+            <div className="absolute bottom-4 left-4 z-10 pointer-events-none">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0C0C12]/80 border border-[#D6A75D]/25 backdrop-blur-md text-[11px] text-[#E5D2B8] tracking-wider uppercase font-medium shadow-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D6A75D]" />
+                <span>Set Dosa Craftsmanship</span>
+                <span className="text-[#8E8B82]">·</span>
+                <span>100% Pure Vegetarian</span>
+              </div>
             </div>
-          )}
+          </div>
         </div>
 
-        {/* Hero Editorial Content & CTAs (Positioned Below the Video per prompt guidelines) */}
+        {/* Hero Editorial Content & CTAs */}
         <div className="max-w-4xl mx-auto text-center px-4">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-[#FAF8F5] tracking-tight leading-[1.1] mb-4 text-balance">
             Pure Vegetarian Elegance, Crafted for Koppal
