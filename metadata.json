@@ -1,0 +1,6 @@
+{
+  "name": "Food Land — 100% Vegetarian Restaurant",
+  "description": "Food Land is a premier 100% pure vegetarian culinary destination in Koppal, Karnataka, offering authentic vegetarian delicacies in a luxury dining atmosphere.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
