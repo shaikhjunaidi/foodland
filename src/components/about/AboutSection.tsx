@@ -1,13 +1,21 @@
 import React from 'react';
-import { MapPin, Shield } from 'lucide-react';
+import { motion } from 'motion/react';
+import { MapPin, Shield, Award, Sparkles } from 'lucide-react';
+import { fadeInUp, luxuryEase } from '../../utils/animations';
 
 export const AboutSection: React.FC = () => {
   return (
-    <section id="about" className="py-28 px-6 bg-[#0E0E14] border-t border-[#D6A75D]/10 relative">
+    <section id="about" className="py-28 px-6 bg-[#0E0E14] border-t border-[#D6A75D]/10 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Narrative */}
-          <div className="lg:col-span-7">
+          {/* Left Column: Narrative with Scroll Entrance */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.8, ease: luxuryEase }}
+            className="lg:col-span-7"
+          >
             <div className="flex items-center gap-2 text-xs text-[#D6A75D] uppercase tracking-[0.2em] font-semibold mb-3">
               <span>Our Roots & Story</span>
               <span aria-hidden="true">·</span>
@@ -28,31 +36,45 @@ export const AboutSection: React.FC = () => {
               </p>
             </div>
 
-            {/* Pillar Grid */}
+            {/* Pillar Grid with Hover Micro-effects */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t border-[#22222D]">
-              <div className="flex items-start gap-3">
+              <motion.div
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-start gap-3 p-3 rounded-lg hover:bg-white/[0.02] transition-colors"
+              >
                 <Shield className="w-5 h-5 text-[#D6A75D] shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-sm font-semibold text-[#FAF8F5]">Strict Pure-Veg Guarantee</h4>
                   <p className="text-xs text-[#8E8B82] mt-0.5">Absolute zero meat, poultry, seafood, or eggs on premises.</p>
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
+              </motion.div>
+              <motion.div
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-start gap-3 p-3 rounded-lg hover:bg-white/[0.02] transition-colors"
+              >
                 <MapPin className="w-5 h-5 text-[#D6A75D] shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-sm font-semibold text-[#FAF8F5]">Local Koppal Heart</h4>
                   <p className="text-xs text-[#8E8B82] mt-0.5">Proudly serving families, travelers, and the Koppal community.</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Architectural & Brand Identity Showcase */}
-          <div className="lg:col-span-5">
-            <div className="p-8 md:p-10 rounded-xl bg-[#14141C] border border-[#D6A75D]/25 relative shadow-2xl">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#D6A75D]/10 rounded-bl-full pointer-events-none blur-xl" />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.8, ease: luxuryEase, delay: 0.2 }}
+            className="lg:col-span-5"
+          >
+            <div className="p-8 md:p-10 rounded-2xl bg-[#14141C] border border-[#D6A75D]/30 relative shadow-2xl overflow-hidden group hover:border-[#D6A75D]/50 transition-colors">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-[#D6A75D]/15 rounded-bl-full pointer-events-none blur-2xl" />
 
-              <div className="text-center pb-8 border-b border-[#252532]">
+              <div className="text-center pb-8 border-b border-[#252532] relative">
                 <span className="text-[11px] uppercase tracking-[0.25em] text-[#D6A75D] font-semibold block mb-2">
                   The Food Land Seal
                 </span>
@@ -89,12 +111,12 @@ export const AboutSection: React.FC = () => {
               </div>
 
               {/* Owner Note Placeholder */}
-              <div className="p-4 rounded-lg bg-[#0C0C10] border border-[#22222C] text-[11px] text-[#8E8B82] leading-relaxed">
+              <div className="p-4 rounded-xl bg-[#0C0C10] border border-[#22222C] text-[11px] text-[#8E8B82] leading-relaxed">
                 <span className="text-[#D6A75D] font-semibold block mb-0.5">Founders Note:</span>
                 "We built Food Land so every guest can savor genuine vegetarian craft without questioning kitchen practices. Come sit at our table."
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

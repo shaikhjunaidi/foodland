@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { ShieldCheck, Heart } from 'lucide-react';
 
 interface FooterProps {
@@ -16,7 +17,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onBookTable }) => {
             <h3 className="text-2xl font-serif font-bold text-[#FAF8F5] tracking-tight">
               FOOD LAND
             </h3>
-            <p className="text-xs text-[#8E8B82] leading-relaxed max-w-sm">
+            <p className="text-xs text-[#8E8B82] leading-relaxed max-w-sm font-light">
               A premier 100% pure vegetarian culinary destination in Koppal, Karnataka. Dedicated to traditional gastronomy, pristine kitchen ethics, and luxury hospitality.
             </p>
             <div className="flex items-center gap-2 text-xs text-[#D6A75D] pt-2">
@@ -31,38 +32,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onBookTable }) => {
               Exploration
             </h4>
             <ul className="space-y-2">
-              <li>
-                <button
-                  onClick={() => onNavigate('hero')}
-                  className="hover:text-[#D6A75D] transition-colors cursor-pointer"
-                >
-                  3D Cinematic Experience
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('philosophy')}
-                  className="hover:text-[#D6A75D] transition-colors cursor-pointer"
-                >
-                  Pure Veg Philosophy
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('menu')}
-                  className="hover:text-[#D6A75D] transition-colors cursor-pointer"
-                >
-                  Approved Menu
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('mealtimes')}
-                  className="hover:text-[#D6A75D] transition-colors cursor-pointer"
-                >
-                  Meal Schedules
-                </button>
-              </li>
+              {[
+                { id: 'hero', label: 'Cinematic Experience' },
+                { id: 'philosophy', label: 'Pure Veg Philosophy' },
+                { id: 'menu', label: 'Approved Menu' },
+                { id: 'mealtimes', label: 'Meal Schedules' },
+              ].map((item) => (
+                <li key={item.id}>
+                  <motion.button
+                    whileHover={{ x: 3 }}
+                    onClick={() => onNavigate(item.id)}
+                    className="hover:text-[#D6A75D] transition-colors cursor-pointer text-left font-light"
+                  >
+                    {item.label}
+                  </motion.button>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -72,37 +57,29 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onBookTable }) => {
               Atmosphere
             </h4>
             <ul className="space-y-2">
+              {[
+                { id: 'gallery', label: 'Sanctuary Gallery' },
+                { id: 'about', label: 'About Food Land' },
+                { id: 'contact', label: 'Location & Map' },
+              ].map((item) => (
+                <li key={item.id}>
+                  <motion.button
+                    whileHover={{ x: 3 }}
+                    onClick={() => onNavigate(item.id)}
+                    className="hover:text-[#D6A75D] transition-colors cursor-pointer text-left font-light"
+                  >
+                    {item.label}
+                  </motion.button>
+                </li>
+              ))}
               <li>
-                <button
-                  onClick={() => onNavigate('gallery')}
-                  className="hover:text-[#D6A75D] transition-colors cursor-pointer"
-                >
-                  Sanctuary Gallery
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('about')}
-                  className="hover:text-[#D6A75D] transition-colors cursor-pointer"
-                >
-                  About Food Land
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('contact')}
-                  className="hover:text-[#D6A75D] transition-colors cursor-pointer"
-                >
-                  Location & Map
-                </button>
-              </li>
-              <li>
-                <button
+                <motion.button
+                  whileHover={{ x: 3 }}
                   onClick={onBookTable}
-                  className="text-[#D6A75D] hover:underline transition-colors cursor-pointer"
+                  className="text-[#D6A75D] hover:underline transition-colors cursor-pointer font-medium"
                 >
-                  Request Table Reservation
-                </button>
+                  Request Table Reservation →
+                </motion.button>
               </li>
             </ul>
           </div>
@@ -112,7 +89,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onBookTable }) => {
             <h4 className="text-xs uppercase tracking-wider text-[#FAF8F5] font-semibold">
               Koppal Haven
             </h4>
-            <p className="text-xs text-[#8E8B82] leading-relaxed">
+            <p className="text-xs text-[#8E8B82] leading-relaxed font-light">
               Koppal, Karnataka, India<br />
               Postal Code: 583231<br />
               Cuisine: 100% Pure Vegetarian
@@ -128,7 +105,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onBookTable }) => {
           <div>
             © {new Date().getFullYear()} Food Land. All rights reserved. 100% Pure Vegetarian Restaurant.
           </div>
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-4 text-xs font-light">
             <span>Koppal, Karnataka</span>
             <span>·</span>
             <span>Zero Meat · Zero Eggs</span>
